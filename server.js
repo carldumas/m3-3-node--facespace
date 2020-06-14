@@ -33,14 +33,14 @@ const handleProfilePage = (req, res) => {
     });
   });
 
-  res.status(200).render("pages/profile", {
+  res.status(200).render('pages/profile', {
     user: userProfile,
     friends: userFriends,
   });
 };
 
 const handleSignin = (req, res) => {
-  res.send('ok');
+  res.status(200).render('pages/signin')
 }
 
 // -----------------------------------------------------
