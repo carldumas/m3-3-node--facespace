@@ -23,12 +23,21 @@ const handleProfilePage = (req, res) => {
     return user._id === _id;
   });
 
-  if (userProfile) {
-    res.status(200).render("pages/profile", { user: userProfile });
-  } else {
+  if (!userProfile) {
     res.status(404).send("I couldn't find what you're looking for.");
   };
-}
+
+  let userFriends = userProfile.friends.map((id) => {
+    return users.find((user) => {
+      return user._id === id;
+    });
+  });
+
+  res.status(200).render("pages/profile", {
+    user: userProfile,
+    friends: userFriends,
+  });
+};
 
 // -----------------------------------------------------
 // server endpoints
