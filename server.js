@@ -17,7 +17,17 @@ const handleHomepage = (req, res) => {
 };
 
 const handleProfilePage = (req, res) => {
-  res.status(200).send(req.params._id);
+  let _id = req.params._id;
+
+  let userProfile = users.find((user) => {
+    return user._id === _id;
+  });
+
+  if (userProfile) {
+    res.status(200).render("pages/profile", { user: userProfile });
+  } else {
+    res.status(404).send("I couldn't find what you're looking for.");
+  };
 }
 
 // -----------------------------------------------------
