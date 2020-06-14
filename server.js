@@ -41,7 +41,22 @@ const handleProfilePage = (req, res) => {
 
 const handleSignin = (req, res) => {
   res.status(200).render('pages/signin')
-}
+};
+
+const handleName = (req, res) => {
+  let firstName = req.query.firstName;
+  // console.log(firstName);
+
+  let findUser = users.find((user) => {
+    return user.name === firstName;
+  });
+
+  if (findUser !== undefined) {
+    res.status(200).redirect(`/users/${findUser._id}`)
+  } else {
+    res.status(404).render('pages/signin');
+  };
+};
 
 // -----------------------------------------------------
 // server endpoints
@@ -55,6 +70,7 @@ express()
   .get('/', handleHomepage)
   .get('/users/:_id', handleProfilePage)
   .get('/signin', handleSignin)
+  .get('/getname', handleName)
 
   // a catchall endpoint that will send the 404 message.
   .get('*', handleFourOhFour)
